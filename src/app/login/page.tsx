@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-center text-black text-2xl">Signup</h1>
+      <h1 className="text-center text-black text-2xl">Login</h1>
       <br />
 
       <label htmlFor="email">email</label>
