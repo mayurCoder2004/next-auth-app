@@ -5,7 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { link } from 'fs';
+
 
 
 const ProfilePage = () => {
@@ -17,10 +17,11 @@ const [data,setData]=React.useState('nothing');
     toast.success("logout successfully");
     router.push("/login")
 
-   } catch (error: any) {
-    console.log(error.message);
-    toast.error(error.message)
-    
+   } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
    }
   }
 const getUserDetails=async()=>{

@@ -12,29 +12,21 @@ const LoginPage = () => {
     password: "",
   });
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  // Removed unused variables: buttonDisabled, loading
 
-  useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [user]);
+  // Removed unused effect for buttonDisabled
 
   const onLogin = async () => {
     try {
-      setLoading(true);
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
       toast.success("Login success");
       router.push("/profile");
-    } catch (error: any) {
-      console.log("Login failed", error.message);
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log("Login failed", error.message);
+        toast.error(error.message);
+      }
     }
   };
 

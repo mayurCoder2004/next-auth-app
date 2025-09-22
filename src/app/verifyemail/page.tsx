@@ -9,26 +9,26 @@ export default function VerifyEmailPage() {
     const [token, setToken] = useState("");
     const [verified, setVerified] = useState(false);
 
-    const verifyUserEmail: () => Promise<void> = async () => {
-        try {
-            await axios.post("/api/users/verifyemail", {token});
-            setVerified(true);
-        } catch (error: unknown) {
-            if (typeof error === "object" && error !== null && "response" in error) {
-                // Optionally log error
-                // console.log((error as any).response.data);
-            }
-        }
-    }
     useEffect(() => {
         const urlToken = window.location.search.split("=")[1];
         setToken(urlToken || "");
     }, []);
     useEffect(() => {
+        const verifyUserEmail = async () => {
+            try {
+                await axios.post("/api/users/verifyemail", {token});
+                setVerified(true);
+            } catch (error: unknown) {
+                if (typeof error === "object" && error !== null && "response" in error) {
+                    // Optionally log error
+                    // console.log((error as any).response.data);
+                }
+            }
+        };
         if (token.length > 0) {
             verifyUserEmail();
         }
-    }, [token, verifyUserEmail]);
+    }, [token]);
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
             <h1 className="text-4xl">Verify Email</h1>
