@@ -1,10 +1,10 @@
 import React from 'react'
 
-interface UserProfileProps {
+type PageProps = {
   params: { id: string };
-}
+};
 
-const userProfile = ({ params }: UserProfileProps) => {
+const userProfile = ({ params }: PageProps) => {
   return (
     <div className='flex flex-col items-center justify-center min-h-screen py-2'>
         <h1>Profile</h1>
