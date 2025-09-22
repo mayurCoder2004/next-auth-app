@@ -1,15 +1,20 @@
 import { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
-import { requestToBodyStream } from "next/dist/server/body-streams";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
 export const getDataFromToken=(request:NextRequest)=>{
     try {
       const token=  request.cookies.get("token")?.value || '';
-      const decodedToken:any=jwt.verify(token,process.env.TOKEN_SECRET!);
-      return decodedToken.id;
-    } catch (error:any) {
-        throw new Error(error.message);
-        
+  const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!);
+      if (typeof decodedToken === 'object' && decodedToken !== null && 'id' in decodedToken) {
+        return (decodedToken as JwtPayload).id as string;
+      }
+      throw new Error('Invalid token payload');
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
     }
+    throw error;
+  }
 
 
 }
